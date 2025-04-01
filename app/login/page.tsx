@@ -42,10 +42,18 @@ const Login = () => {
         throw new Error(data.message || "เกิดข้อผิดพลาดในการล็อกอิน");
         alert(data.message);
       }
-
+  
       sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("CustomerID", data.id);
+      sessionStorage.setItem("name", data.name);
+      
+
+
+      
       router.push(data.role === "admin" ? "/admin/" : data.role === "staff" ? "/staff/" : "/");
       alert(data.message);
+    
+
 
     } catch (err) {
       if (err instanceof Error) {
@@ -66,8 +74,13 @@ const Login = () => {
       const providerObj = provider === "Google" ? googleProvider : facebookProvider;
       const result = await signInWithPopup(auth, providerObj);
   
-      const token = await result.user.getIdToken();
-      sessionStorage.setItem("token", token);
+      // รับข้อมูล user และ token
+    const token = await result.user.getIdToken();
+    const userName = result.user.displayName || "ผู้ใช้";  // ใช้ชื่อจาก Google หรือ Facebook
+
+    // เซ็ตค่าใน sessionStorage
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("name", userName);  // เก็บชื่อผู้ใช้
   
       router.push("/");
     } catch (err) {

@@ -25,7 +25,7 @@ const SearchCars = () => {
   // Filter fields
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [carType, setCarType] = useState("รถเก๋ง");
+  const [carType, setCarType] = useState("Sedan");
   const [returnLocation, setReturnLocation] = useState("สนามบินดอนเมือง");
   const [rentalDays, setRentalDays] = useState("");
 
@@ -102,7 +102,7 @@ const SearchCars = () => {
 
     // รอสักครู่เพื่อให้ setBooking ทำงานก่อนเปลี่ยนหน้า
     setTimeout(() => {
-      router.push(`/rentdetail/${selectedCar.carID}`);
+      router.push(`/rentdetail`);
     }, 300);
   };
 
@@ -202,7 +202,7 @@ const SearchCars = () => {
 
 
                     <div className="mt-6 text-right">
-                      <Link href={`/rentdetail/${car.carID}`} passHref>
+                      <Link href={`/rentdetail`}>
                         <button
                           className="bg-[#0D3489] text-white px-6 py-2 rounded-md hover:bg-[#092C5D] transition"
                           onClick={() => handleDetails(car)}

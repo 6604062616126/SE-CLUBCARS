@@ -100,7 +100,7 @@ export default function PaymentForm() {
 
             <div className="space-y-6">
               <div className="w-full h-48 bg-gray-100 rounded-xl overflow-hidden mb-4">
-                <img src="/car-image.jpg" alt="Car" className="w-full h-full object-cover" />
+                <img src="/benz1.png" alt="Car" className="w-full h-full object-cover" />
               </div>
 
               <div>

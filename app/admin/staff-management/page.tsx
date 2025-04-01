@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 
 const StaffManagementPage: React.FC = () => {
     const [staffs, setStaffs] = useState([]);
@@ -38,15 +38,15 @@ const StaffManagementPage: React.FC = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({staffID }),
+                body: JSON.stringify({ staffID }),
             });
-            const data = await response.json(); 
+            const data = await response.json();
             if (response.ok) {
                 alert(data.message);
                 setStaffs((prevStaffs) => prevStaffs.filter((staff) => staff.staffID !== staffID));
                 return true;
             } else {
-                alert(data.message); 
+                alert(data.message);
                 return false;
             }
         } catch (error) {
@@ -56,15 +56,9 @@ const StaffManagementPage: React.FC = () => {
         }
     };
 
-    
     // ไปหน้าเพิ่มพนักงาน
     const goToAddStaff = () => {
         router.push("/admin/staff-management/addstaff");
-    };
-
-    // ไปหน้าแก้ไขพนักงาน
-    const goToEditStaff = (staffId: string) => {
-        router.push(`/admin/staff-management/editstaff?id=${staffId}`);
     };
 
     return (
@@ -128,15 +122,6 @@ const StaffManagementPage: React.FC = () => {
                             {/* เบอร์โทร */}
                             <div className="col-span-1 truncate">{staff.phoneNumber}</div>
                             <div className="flex gap-2">
-
-
-                            <button
-                                    className="text-blue-600 hover:text-blue-800 p-1"
-                                    title="แก้ไข"
-                                >
-                                    <FiEdit size={18} />
-                                </button>
-
                                 <button
                                     onClick={() => handleDelete(staff.staffID)}
                                     className="text-red-600 hover:text-red-800 p-1"
@@ -144,10 +129,8 @@ const StaffManagementPage: React.FC = () => {
                                 >
                                     <FiTrash2 size={18} />
                                 </button>
-
                             </div>
                         </div>
-
                     ))
                 ) : (
                     <div className="p-8 text-center text-gray-500">

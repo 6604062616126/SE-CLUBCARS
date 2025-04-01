@@ -1,4 +1,4 @@
-import  TokenManager  from "@/utils/tokenManager";  // นำเข้า TokenManager
+import  TokenManager  from "@/utils/tokenManager"; 
 import { mysqlPool } from "@/utils/db";
 import {Rental} from "./RentalC" ;
 import {Payment} from "./PaymentC" ;

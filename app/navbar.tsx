@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import  TokenManager  from "@/utils/tokenManager";
 import { Menu, X, Phone } from "lucide-react";
 const jwt = require("jsonwebtoken");
 
@@ -17,12 +16,14 @@ const Navbar = () => {
     // ตรวจสอบการเปลี่ยนแปลงของ sessionStorage ทุกครั้งที่มีการเปลี่ยนแปลง
     useEffect(() => {
         const checkLoginStatus = () => {
-            const user = sessionStorage.getItem("token");
+            const user = sessionStorage.getItem("name");
+            const token = sessionStorage.getItem("token");
             if (user) {
                 setIsLoggedIn(true);
                 try {
-                    const decodedToken = jwt.decode(user);
-                    setUserName(decodedToken.userName || "ผู้ใช้");
+                   
+                    setUserName(user || "ผู้ใช้");
+                    
                 } catch (error) {
                     console.log("Error parsing user data:", error);
                 }
@@ -46,6 +47,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         sessionStorage.removeItem("token"); // ลบ token ออกจาก sessionStorage
+        sessionStorage.removeItem("name");
         setIsLoggedIn(false); // รีเซ็ตสถานะการล็อกอิน
         setUserName(""); // รีเซ็ตชื่อผู้ใช้
         router.push("/signin"); // ไปยังหน้าสมัครสมาชิก

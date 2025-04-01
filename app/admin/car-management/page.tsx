@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-    FiEdit,
     FiTrash2,
     FiPlus,
     FiArrowLeft,
@@ -153,10 +152,10 @@ const CarManagementPage: React.FC = () => {
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
                                     className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors text-sm font-medium ${activeTab === tab
-                                            ? tab === "all"
-                                                ? "bg-blue-600 text-white shadow-blue-sm"
-                                                : statusColors[tab]?.replace("100", "600").replace("text", "text-white") + " shadow-sm"
-                                            : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                                        ? tab === "all"
+                                            ? "bg-blue-600 text-white shadow-blue-sm"
+                                            : statusColors[tab]?.replace("100", "600").replace("text", "text-white") + " shadow-sm"
+                                        : "bg-gray-100 hover:bg-gray-200 text-gray-700"
                                         }`}
                                 >
                                     {tab === "all" ? "ทั้งหมด" : tab}
@@ -254,7 +253,7 @@ const CarManagementPage: React.FC = () => {
                                                     src={car.carImgUrl}
                                                     alt={`${car.brand} ${car.model}`}
                                                     className="w-full h-full object-cover"
-                                                    
+
                                                 />
                                             </div>
                                         ) : (
@@ -265,14 +264,7 @@ const CarManagementPage: React.FC = () => {
                                     </div>
 
                                     {/* Actions */}
-                                    <div>
-                                        <button
-                                            onClick={() => router.push(`/admin/car-management/edit?LPlate=${car.LPlate}`)}
-                                            className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
-                                            title="แก้ไข"
-                                        >
-                                            <FiEdit size={18} />
-                                        </button>
+                                    <div className="flex items-center">
                                         <button
                                             onClick={() => handleDelete(car.LPlate)}
                                             className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"

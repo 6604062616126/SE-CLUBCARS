@@ -142,7 +142,13 @@ export default function Pro() {
   }
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
+    const customerID = sessionStorage.getItem("CustomerID"); // ดึง CustomerID จาก sessionStorage
 
+  // ตรวจสอบว่า CustomerID มีค่า
+  if (!customerID) {
+    alert("กรุณาเข้าสู่ระบบก่อน");
+    return;
+  }
     // กำหนดค่าของ userName และ phoneNumber ที่ได้รับจาก input
     const updatedUserName = userName.trim(); // ค่า userName ที่ผู้ใช้กรอก
     const updatedPhoneNumber = phoneNumber.trim(); // ค่า phoneNumber ที่ผู้ใช้กรอก
@@ -168,7 +174,10 @@ export default function Pro() {
           "Content-Type": "application/json",
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(dataToSend),
+        body: JSON.stringify({
+          ...dataToSend,
+          customerID: customerID  // ส่ง CustomerID ไป API
+        }),
       });
       const result = await response.json(); // ดึงข้อความจาก API
   
@@ -184,11 +193,19 @@ export default function Pro() {
       // ถ้าไม่มีข้อมูลให้ส่งไป
       alert("กรุณาข้อมูลที่ต้องการเปลี่ยนแปลง");
     }
+    
   };
 
   const handleSubmitPasswordChange = async () => {
     const token = localStorage.getItem("token");
-    
+    const customerID = sessionStorage.getItem("CustomerID"); // ดึง CustomerID จาก sessionStorage
+     console.log("CustomerID:", customerID);
+
+      if (!customerID) {
+        alert("กรุณาเข้าสู่ระบบก่อน");
+        return;
+      }
+        
 
     const response = await fetch("/api/changePW", {
       method: "PUT",
@@ -196,7 +213,11 @@ export default function Pro() {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify({ oldPassword, newPassword }),
+      body: JSON.stringify({
+        oldPassword,  // ส่ง oldPassword
+        newPassword,  // ส่ง newPassword
+        customerID    // ส่ง customerID
+      }),
     });
     const result = await response.json();
     
@@ -207,13 +228,14 @@ export default function Pro() {
     }
   };
   const handleLogout = async () => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.log("❌ ไม่มี Token อยู่แล้ว");
+    const name = sessionStorage.getItem("name");
+    if (!name) {
       return;
     }
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem("token");
+    sessionStorage.removeItem("CustomerID");
+    sessionStorage.removeItem("name");
 
     try {
       const response = await fetch("/api/logout", {
@@ -224,15 +246,19 @@ export default function Pro() {
       });
 
       const result = await response.json();
-      console.log(result.message); // ออกจากระบบสำเร็จ
+      alert(result.message); // ออกจากระบบสำเร็จ
   
       // ลบ Token ออกจาก LocalStorage
       localStorage.removeItem("token");
   
       console.log("Token หลัง Logout:", localStorage.getItem("token")); // ควรเป็น null
-    
-      alert("ออกจากระบบสำเร็จ ✅");
-      router.push("/");  // ทำการนำทางหลังจากออกจากระบบ
+      if (!token) {
+        console.log("❌ ไม่มี Token อยู่แล้ว");
+        //alert("ออกจากระบบสำเร็จ ✅");
+        router.push("/");
+        return;
+      }
+       // ทำการนำทางหลังจากออกจากระบบ
     } catch (error) {
       console.error("❌ Error logging out:", error);
     }

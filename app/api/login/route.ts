@@ -36,15 +36,16 @@ export async function POST(req: NextRequest) {
     }
 
 
-
+    
     const ADMIN_PHONE =  "0888888888"; 
     const STAFF_PHONE =  "0877777777"; 
     const isAdmin = user.phoneNumber === ADMIN_PHONE;
     const isStaff = user.phoneNumber === STAFF_PHONE;
+    console.log("CID=",user.CustomerID);
     // สร้าง JWT Token
     const token = jwt.sign(
       {
-        id: user.id,
+        id: user.CustomerID,
         phone: user.phoneNumber,
         role: isAdmin ? "admin" : isStaff ? "staff" : "user"
       },
@@ -58,9 +59,10 @@ export async function POST(req: NextRequest) {
         : isStaff 
           ? "✅ เข้าสู่ระบบสำเร็จ (staff)" 
           : "✅ เข้าสู่ระบบสำเร็จ",
-      token,
+      token, id: user.CustomerID, name:user.userName ,
       role: isAdmin ? "admin" : isStaff ? "staff" : "user" // ✅ กำหนด role ให้ staff ด้วย
     }, { status: 200 });
+
 
   } catch (err) {
     console.error("🚨 Error during login:", err);

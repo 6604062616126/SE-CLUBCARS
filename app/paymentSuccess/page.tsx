@@ -90,9 +90,9 @@ export default function CancelBookingPage() {
                             <div className="flex justify-between items-start">
                                 <div>
                                     <p className="font-medium">ค่าเช่ารถ 3 วัน</p>
-                                    <p className="text-sm text-gray-500">4,444 บาท/วัน × 3 วัน</p>
+                                    <p className="text-sm text-gray-500">550 บาท/วัน × 3 วัน</p>
                                 </div>
-                                <p className="font-medium">13,332 บาท</p>
+                                <p className="font-medium">1650 บาท</p>
                             </div>
 
                             <div className="flex justify-between items-start">
@@ -114,7 +114,7 @@ export default function CancelBookingPage() {
                             <div className="border-t border-gray-200 pt-4 mt-4">
                                 <div className="flex justify-between">
                                     <p className="font-bold">รวมทั้งหมด</p>
-                                    <p className="font-bold text-lg">18,532 บาท</p>
+                                    <p className="font-bold text-lg">6850 บาท</p>
                                 </div>
                 
                             </div>

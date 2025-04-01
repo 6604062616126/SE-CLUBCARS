@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 
 const CustomerManagementPage: React.FC = () => {
     const [customers, setCustomers] = useState([]);
@@ -46,7 +46,7 @@ const CustomerManagementPage: React.FC = () => {
             const data = await response.json();
 
             if (response.ok) {
-                alert(data.message); 
+                alert(data.message);
                 setCustomers((prevCustomers) => prevCustomers.filter((customer) => customer.CustomerID !== customerID));
                 return true;
             } else {
@@ -58,14 +58,6 @@ const CustomerManagementPage: React.FC = () => {
             alert("เกิดข้อผิดพลาดในการลบข้อมูล");
             return false;
         }
-    };
-
-
-
-
-    // ไปหน้าแก้ไขลูกค้า
-    const goToEditCustomer = (customerId: string) => {
-        router.push(`/admin/customer-management/editcustomer?id=${customerId}`);
     };
 
     return (
@@ -123,14 +115,6 @@ const CustomerManagementPage: React.FC = () => {
                             {/* เบอร์โทร */}
                             <div className="col-span-1 truncate">{customer.phoneNumber}</div>
                             <div className="flex gap-2">
-
-                                <button
-                                    className="text-blue-600 hover:text-blue-800 p-1"
-                                    title="แก้ไข"
-                                >
-                                    <FiEdit size={18} />
-                                </button>
-
                                 <button
                                     onClick={() => handleDelete(customer.CustomerID)}
                                     className="text-red-600 hover:text-red-800 p-1"
@@ -138,7 +122,6 @@ const CustomerManagementPage: React.FC = () => {
                                 >
                                     <FiTrash2 size={18} />
                                 </button>
-
                             </div>
                         </div>
                     ))
